@@ -1,0 +1,42 @@
+
+.artify-drop-zone{
+        border: 10px dashed #ccc;
+        color: #ccc;
+        font-size: 32px;
+        height: 400px;
+        line-height: 400px;
+        text-align: center;
+        width: 400px;
+        }
+        .artify-drop-zone.artify-drag-over{
+            border: 10px dashed red;		
+            }
+
+.artify {
+    position: relative;	
+    }
+    .artify span {
+        display:block;
+        float:left;
+        background: blue;
+        -moz-transform: rotate(270deg);
+        -webkit-transform: rotate(270deg);
+        transform: rotate(270deg);
+        -moz-transition: all 0.4s ease-in-out 0s;
+        -webkit-transition: all 0.4s ease-in-out 0s;
+        transition: all 0.4s ease-in-out 0s;
+        border-radius: 100% 0 0 0;
+        }
+
+.artify span:nth-child(n) {
+    border-radius: 100% 0 0 0;
+    }
+.artify span:nth-child(2n) {
+    border-radius: 0 100% 0 0;
+    }
+.artify span:nth-child(3n) {
+    border-radius: 0 0 100% 0;
+    }
+.artify span:nth-child(4n) {
+    border-radius: 0 0 0 100%;
+    }

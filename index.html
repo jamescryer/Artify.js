@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title></title>
+		<meta name="description" content="">
+		<meta name="viewport" content="width=device-width">
+		<link rel="stylesheet" href="libs/twitter-bootstrap/bootstrap.min.css">
+		<link rel="stylesheet" href="artify.css">
+		
+		<style>
+			body {
+				padding-top: 60px;	
+				}
+				
+			footer {
+				margin-top: 45px;
+				padding: 35px 0 36px;
+				border-top: 1px solid #e5e5e5;
+				}
+				
+		</style>
+		
+	</head>
+	<body>
+		<div class="container">
+			<header>
+				<div class="page-header">
+					<h1>Artify.js : CSS3 art generator <small>Drop an image, see the art</small></h1>
+				</div>
+			</header>
+	
+			<section role="main">
+				<div class="row">
+					<div class="span12">
+						<div class="hero-unit">
+							<div class="row">
+								<div class="span6">
+									<p>
+										<div id="drop-zone" class="artify-drop-zone">
+											Drop image here.
+										</div>
+									</p>
+								</div>
+								<div class="span4">
+									<h2>What is this?</h2>
+									<p>
+										Inspired by a recent experiment with <a href="http://www.thismanslife.co.uk/projects/lab/isthisart/" target="_blank">CSS3 art</a>, and a not so recent experiment with <a href="http://www.nihilogic.dk/labs/jsascii/" target="_blank">Ascii art</a>.
+										Artify.js is a simple jQuery plugin which allows you to transform images into art with CSS3.
+									</p>
+									<p>
+										<strong>Try it for yourself</strong>, your file wont be uploaded to a server.
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span6">
+						<h2>How does it work?</h2>
+						<p>Artify.js uses <a href="https://developer.mozilla.org/en/Using_files_from_web_applications" target="_blank">HTML5 File API</a>, and CSS3.</p>
+						<p>
+							<br/>
+							<a class="btn btn-large btn-primary" href="https://github.com/jamescryer/artify.js/"><strong>View project on Github</strong></a>
+						</p>
+					</div>
+					<div class="span6">
+						<h2>How can I use it?</h2>
+						<p>Invoke Artify on a block element to create a drop zone</p>
+						<pre>
+$('div#drop-zone').artify();</pre>
+						<p>Calling Artify on an image will convert the image in place.</p>
+<pre>
+$('img#image-one').artify();</pre>
+						<p>You can provide Artify with two options</p>
+						<pre>
+$('img#image-one').artify({
+	color: 'random', // or hex
+	detail: 'medium' // low | high
+});</pre>
+					</div>
+				</div>
+			</section>
+	  
+			<footer class="footer">
+				<p>
+					Thanks everyone, I am James Cryer. <a href="https://github.com/jamescryer" target="_blank">Github</a> | <a href="https://twitter.com/jamescryer" target="_blank">Twitter</a> | <a href="http://jamescryer.wordpress.com" target="_blank">Blog</a>
+				</p>
+			</footer>
+		</div>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script src="src/artify.js"></script>
+
+		<script type="text/javascript">
+			$('#drop-zone').artify({
+				color: 'random',
+				detail: 'medium'
+			});
+		</script>
+
+	</body>
+</html>
