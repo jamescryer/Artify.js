@@ -1,42 +1,154 @@
 
 .artify-drop-zone{
-        border: 10px dashed #ccc;
-        color: #ccc;
-        font-size: 32px;
-        height: 400px;
-        line-height: 400px;
-        text-align: center;
-        width: 400px;
+    border: 10px dashed #ccc;
+    color: #ccc;
+    font-size: 32px;
+    height: 400px;
+    line-height: 400px;
+    text-align: center;
+    width: 400px;
+    }
+    .artify-drop-zone.artify-drag-over{
+        border: 10px dashed #0088CC;		
         }
-        .artify-drop-zone.artify-drag-over{
-            border: 10px dashed red;		
-            }
 
 .artify {
-    position: relative;	
+    position: relative;
+    overflow: hidden;
     }
     .artify span {
         display:block;
         float:left;
-        background: blue;
-        -moz-transform: rotate(270deg);
-        -webkit-transform: rotate(270deg);
-        transform: rotate(270deg);
-        -moz-transition: all 0.4s ease-in-out 0s;
-        -webkit-transition: all 0.4s ease-in-out 0s;
-        transition: all 0.4s ease-in-out 0s;
-        border-radius: 100% 0 0 0;
+        background: #228751;
         }
 
-.artify span:nth-child(n) {
-    border-radius: 100% 0 0 0;
+/* shades */
+
+.artify .shade-0{
+    opacity: 0;
     }
-.artify span:nth-child(2n) {
+.artify .shade-1{
+    opacity: 0.1;
+    }
+.artify .shade-2{
+    opacity: 0.2;
+    }
+.artify .shade-3{
+    opacity: 0.3;
+    }
+.artify .shade-4{
+    opacity: 0.4;
+    }
+.artify .shade-5{
+    opacity: 0.5;
+    }
+.artify .shade-6{
+    opacity: 0.6;
+    }
+.artify .shade-7{
+    opacity: 0.7;
+    }
+.artify .shade-8{
+    opacity: 0.8;
+    }
+.artify .shade-9{
+    opacity: 0.9;
+    }
+.artify .shade-10{
+    opacity: 1;
+    }
+    
+.artify.inverse .shade-0{
+    opacity: 1;
+    }
+.artify.inverse .shade-1{
+    opacity: 0.9;
+    }
+.artify.inverse .shade-2{
+    opacity: 0.8;
+    }
+.artify.inverse .shade-3{
+    opacity: 0.7;
+    }
+.artify.inverse .shade-4{
+    opacity: 0.6;
+    }
+.artify.inverse .shade-5{
+    opacity: 0.5;
+    }
+.artify.inverse .shade-6{
+    opacity: 0.4;
+    }
+.artify.inverse .shade-7{
+    opacity: 0.3;
+    }
+.artify.inverse .shade-8{
+    opacity: 0.2;
+    }
+.artify.inverse .shade-9{
+    opacity: 0.1;
+    }
+.artify.inverse .shade-10{
+    opacity: 0;
+    }
+    
+
+/*color swatch*/
+
+.artify.neutral span {
+    background: #00a287;
+    }
+.artify.neutral span:nth-child(2n) {
+    background: #4c59d8;
+    }
+.artify.neutral span:nth-child(3n) {
+    background: #408ad2;
+    }
+.artify.neutral span:nth-child(5n) {
+    background: #228751;
+    }
+    
+.artify.warm span {
+    background: #ff3500;
+    }
+.artify.warm span:nth-child(2n) {
+    background: #a64b00;
+    }
+.artify.warm span:nth-child(3n) {
+    background: #ff9a00;
+    }
+.artify.warm span:nth-child(5n) {
+    background: #ff7400;
+    }
+    
+
+/* effects */
+
+.artify.spot span{
+    border-radius: 50%;
+    outline: 1px solid white;
+    }
+
+.artify.semi span{
+    border-radius: 100% 0 0 0;
+    outline: 1px solid white;
+    }
+.artify.semi span:nth-child(2n) {
     border-radius: 0 100% 0 0;
     }
-.artify span:nth-child(3n) {
+.artify.semi span:nth-child(3n) {
     border-radius: 0 0 100% 0;
     }
-.artify span:nth-child(4n) {
+.artify.semi span:nth-child(5n) {
     border-radius: 0 0 0 100%;
     }
+.artify.semi span:nth-child(8n) {
+    border-radius: 100% 0 0 0;
+    }
+.artify.semi span:nth-child(13n) {
+    border-radius: 0 100% 0 0;
+    }
+.artify.semi span:nth-child(21n) {
+    border-radius: 0 0 100% 0;
+    }
+    

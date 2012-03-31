@@ -2,15 +2,14 @@
 	'use strict';
 	
 	var $ = w.jQuery,
-		FileReader = w.FileReader
-	;
+		FileReader = w.FileReader,
+		Image = w.Image;
 
-	function _generateCss3Art( sourceImageData, width, height ){
+	function _generateCss3Art( sourceImageData, width, height, random ){
 
-		var $container = $('<div class="artify"/>'),
+		var $c = $('<div/>'),
 			percentileWidth = (100 / width) + '%',
-			percentileHeight = (100 / height) + '%'
-		;
+			percentileHeight = (100 / height) + '%';
 
 		$.each( new Array( height ), function( verticalPos ){
 
@@ -22,65 +21,105 @@
 					blue = sourceImageData[offset + 2],
 					alpha = sourceImageData[offset + 3],
 					brightness = (0.3*red + 0.59*green + 0.11*blue) / 255,
-					shade = (10 - Math.round(brightness * 10)) / 10
-				;
+					shade = (10 - Math.round(brightness * 10));
 				
-				$('<span/>').
-					css({
-						opacity: shade,
-						width: percentileWidth,
-						height: percentileHeight
-					}).
-					appendTo($container)
-				;
+				$c.
+					append( $('<span />').
+						addClass('shade-'+shade).
+						css({
+							width: percentileWidth,
+							height: percentileHeight
+						})
+					);
 			});
+						
+			return true;		
 		});
-		
-		return $container;
+
+		return $c.html();
 	}
 	
-	function _getImageData( fileData, callback ){
+	function _getArtFromData( fileData, w, h, callback ){
         
-		var fileReader = new FileReader(),
-			hiddenCanvas = $('<canvas />').css({display:'none'}).appendTo($('body')).get(0),
+		var isFileData = typeof fileData !== 'string',
+			hiddenCanvas = $('<canvas />').get(0),
 			canvas2dContext = hiddenCanvas.getContext('2d'),
-			hiddenImage = new Image()
-		;
+			hiddenImage = new Image(),
+			fileReader;
 		
-		fileReader.readAsDataURL(fileData);
-
-		fileReader.onload = function (event) {  
-			hiddenImage.src = event.target.result; 
-		};
-
 		hiddenImage.onload = function() {
 			
-			var width = 24,
-				height = 24,
-				imageData
-			;
+			var imageData,
+				$art;
 
-			hiddenCanvas.getContext('2d').drawImage(hiddenImage, 0, 0, hiddenImage.width, hiddenImage.height, 0, 0, width, height);
-			imageData = hiddenCanvas.getContext('2d').getImageData(0, 0, width, height).data;
+			hiddenCanvas.getContext('2d').drawImage(hiddenImage, 0, 0, hiddenImage.width, hiddenImage.height, 0, 0, w, h);
+			imageData = hiddenCanvas.getContext('2d').getImageData(0, 0, w, h).data;
 			
-			callback(imageData, width, height);
+			$art = _generateCss3Art(imageData, w, h);
+			
+			callback($art);
 		};
+		
+		if(isFileData){
+			fileReader = new FileReader();
+			
+			fileReader.onload = function (event) {  
+				hiddenImage.src = event.target.result; 
+			};
+				
+			fileReader.readAsDataURL(fileData);
+		} else {
+			hiddenImage.src = fileData; 
+		}
 	}
-
-	$.fn['artify'] = function(){
+	
+	$.fn['artify'] = function( options ){
+		
+		var size;
+		
+		options = $.extend({},{
+			unitSize: 10, // size of each block
+			className: 'neutral spot'
+		},options); 
+				
 		return $(this).each(function(){
-			var dropZone = $(this),
+			var $target = $(this),
 				dragOverClassName = 'artify-drag-over',
-				dropzoneClassName = 'artify-drop-zone'
-			;
+				dropzoneClassName = 'artify-drop-zone',
+				width = $target.outerWidth(),
+				height = $target.outerHeight(),
+				widthSize = Math.floor(width / options.unitSize),
+				heightSize = Math.floor(height / options.unitSize);
+			
+			function getFrame($art){
+				return $('<div class="artify"/>').
+					addClass( options.className ).
+					css({
+						width: width,
+						height: height
+					}).
+					append($art);
+			}
 
-			dropZone.
+			if(this.tagName === 'IMG'){
+				_getArtFromData(this.src, widthSize, heightSize, function($art){
+					$target.replaceWith(  getFrame($art) );
+				});
+				
+				return;
+			}
+
+			if(!FileReader){ // not supported by IE9
+				return;
+			}
+
+			$target.
 				bind('dragover', function(){ 
-					dropZone.addClass( dragOverClassName ); 
+					$target.addClass( dragOverClassName ); 
 					return false;
 				}).
 				bind("dragend", function () { 
-					dropZone.removeClass( dragOverClassName ); 
+					$target.removeClass( dragOverClassName ); 
 					return false;
 				}). 
 				bind("drop", function(event) {
@@ -89,20 +128,17 @@
                     event.stopPropagation();
                     event.preventDefault();
 
-					dropZone.removeClass( dragOverClassName ); 
+					$target.removeClass( dragOverClassName ); 
 
-					_getImageData( file, function(){
-						var $art = _generateCss3Art.apply(null, arguments);
-						$art.css({
-							width: dropZone.outerWidth(),
-							height: dropZone.outerHeight()
-						});
-						dropZone.removeClass( dropzoneClassName ).html( $art );
+					_getArtFromData(file, widthSize, heightSize, function($art){
+						
+						$target.
+							removeClass( dropzoneClassName ).
+							html( getFrame($art) )
+						;
 					});
-					
 				})
 			;
 		});
 	};
-	
 }(this));
